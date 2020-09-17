@@ -35,14 +35,6 @@ namespace AirportTimetable.Controllers
                 int j = 6 * i;
                 if (nodes[j].InnerText == "" || nodes[j].InnerText == " ")
                     nodes.Remove(nodes[j]);
-                var logopath = nodes[j + 3].SelectNodes("//img");
-                using (StreamWriter sw = new StreamWriter(@"D:/mine/text13.txt"))
-                {
-                    foreach(var item in logopath)
-                    {
-                        sw.WriteLine(item.Attributes["src"].Value);
-                    }
-                }
                 string time = nodes[j].InnerText.Trim();
                 DateTime dt = new DateTime(Convert.ToInt32(time.Substring(11)), 
                     Convert.ToInt32(time.Substring(8, 2)), 
@@ -53,7 +45,6 @@ namespace AirportTimetable.Controllers
                     nodes[j + 1].InnerText.Trim(),
                     nodes[j + 2].InnerText.Trim(),
                     nodes[j + 3].InnerText.Trim(),
-                    logopath.First().InnerText,
                     nodes[j + 4].InnerText[0],
                     nodes[j + 5].InnerText.Trim());;
                 flights.Add(flight);

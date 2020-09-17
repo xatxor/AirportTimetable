@@ -14,12 +14,11 @@ namespace AirportTimetable.Models
         public string City { get; set; }
         public char Terminal { get; set; }
         public string Status { get; set; }
-        public Flight (DateTime time, string name, string company, string companylogopath, string city, char terminal, string status)
+        public Flight (DateTime time, string name, string company, string city, char terminal, string status)
         {
             Time = time;
             Name = name;
             Company = company;
-            CompanyLogoPath = companylogopath;
             City = city;
             Terminal = terminal;
             Status = status;
