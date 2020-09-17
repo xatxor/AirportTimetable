@@ -1,0 +1,36 @@
+﻿@model List<Flight>
+<!DOCTYPE html>
+<html>
+<head>
+    <base href="content/">
+    <meta charset="utf-8">
+    <title>Вылет</title>
+    <link rel="stylesheet" type="text/css" href="~/css/mainstyle.css" />
+</head>
+<body>
+    <div id="header">
+        <div>
+            <span class="maintitletext">Вылеты  </span>
+            <span class="secondarytitletext">(Departures)</span>
+        </div>
+    </div>
+    <div id="maindiv">
+        <table>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td width="10%" class="tdcenteralign">
+                    <span>@item.Time.ToString("HH:mm")</span>
+                    <span class="secondarytabletext">@item.Time.ToString("dd/MM/yyyy")</span>
+                </td>
+                <td width="10%">@item.Name</td>
+                <td>@item.Company</td>
+                <td>@item.City</td>
+                <td class="tdcenteralign" >@item.Terminal</td>
+                <td width="25%">@item.Status</td>
+            </tr>
+            }
+        </table>
+    </div>
+</body>
+</html>
