@@ -9,14 +9,15 @@ tr {
 td, th {
     padding-left: 20px;
     padding-right: 20px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding-top: 15px;
+    padding-bottom: 15px;
     text-align: left;
     font-size: 40px;
 }
-a {
-    font-size: 35px;
-    color: #797979;
+.link {
+    text-align: right;
+    font-size: 40px;
+    color: #ccc;
 }
 .tdcenteralign{
     text-align: center;

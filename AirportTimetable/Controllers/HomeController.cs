@@ -18,7 +18,6 @@ namespace AirportTimetable.Controllers
     {
         Flight flight = new Flight();
         HtmlParser parser;
-        }
         public IActionResult Index()
         {
             parser = new HtmlParser("departures");
