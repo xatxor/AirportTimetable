@@ -35,6 +35,7 @@ namespace AirportTimetable.Controllers
                 int j = 6 * i;
                 if (nodes[j].InnerText == "" || nodes[j].InnerText == " ")
                     nodes.Remove(nodes[j]);
+                var logopath = nodes[j + 3].SelectNodes("//td/img");
                 string time = nodes[j].InnerText.Trim();
                 DateTime dt = new DateTime(Convert.ToInt32(time.Substring(11)), 
                     Convert.ToInt32(time.Substring(8, 2)), 
@@ -44,6 +45,7 @@ namespace AirportTimetable.Controllers
                 Flight flight = new Flight(dt,
                     nodes[j + 1].InnerText.Trim(),
                     nodes[j + 2].InnerText.Trim(),
+                    logopath[i].Attributes["src"].Value,
                     nodes[j + 3].InnerText.Trim(),
                     nodes[j + 4].InnerText[0],
                     nodes[j + 5].InnerText.Trim());;

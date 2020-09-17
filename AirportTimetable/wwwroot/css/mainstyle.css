@@ -9,7 +9,6 @@ tr {
 }
 
 td, th {
-    border: 1px solid #ccc; /* границы между столбцами */
     padding-left: 20px;
     padding-right: 20px;
     padding-top: 10px;
