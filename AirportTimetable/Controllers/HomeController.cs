@@ -16,6 +16,7 @@ namespace AirportTimetable.Controllers
 {
     public class HomeController : Controller
     {
+        HtmlParser parser;
         private readonly ILogger<HomeController> _logger;
 
         public HomeController(ILogger<HomeController> logger)
@@ -25,11 +26,9 @@ namespace AirportTimetable.Controllers
 
         public IActionResult Index()
         {
+            parser = new HtmlParser("sortie");
             List<Flight> flights = new List<Flight>();
-            HtmlWeb web = new HtmlWeb();
-            web.OverrideEncoding = Encoding.UTF8;
-            var htmldoc = web.Load(@"http://www.vnukovo.ru/flights/online-timetable/#tab-sortie");
-            var nodes = htmldoc.DocumentNode.SelectNodes("//tr/td");
+            var nodes = parser.SelectNodes("//tr/td");
             for (int i = 0; i < nodes.Count / 6; i++)
             {
                 int j = 6 * i;
@@ -54,7 +53,7 @@ namespace AirportTimetable.Controllers
             return View(flights);
         }
 
-        public IActionResult Departure()
+        public IActionResult Arrivals()
         {
             return View();
         }
