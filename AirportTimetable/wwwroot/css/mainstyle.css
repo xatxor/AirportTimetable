@@ -3,11 +3,9 @@
     width: 100%;
     border-collapse: collapse;
 }
-
 tr {
     border: 1px solid #ccc; /* границы между строками */
 }
-
 td, th {
     padding-left: 20px;
     padding-right: 20px;
@@ -15,6 +13,10 @@ td, th {
     padding-bottom: 10px;
     text-align: left;
     font-size: 40px;
+}
+a {
+    font-size: 35px;
+    color: #797979;
 }
 .tdcenteralign{
     text-align: center;

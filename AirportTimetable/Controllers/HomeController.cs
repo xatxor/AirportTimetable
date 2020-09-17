@@ -16,46 +16,27 @@ namespace AirportTimetable.Controllers
 {
     public class HomeController : Controller
     {
+        Flight flight = new Flight();
         HtmlParser parser;
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
         }
-
         public IActionResult Index()
         {
-            parser = new HtmlParser("sortie");
-            List<Flight> flights = new List<Flight>();
-            var nodes = parser.SelectNodes("//tr/td");
-            for (int i = 0; i < nodes.Count / 6; i++)
-            {
-                int j = 6 * i;
-                if (nodes[j].InnerText == "" || nodes[j].InnerText == " ")
-                    nodes.Remove(nodes[j]);
-                var logopath = nodes[j + 3].SelectNodes("//td/img");
-                string time = nodes[j].InnerText.Trim();
-                DateTime dt = new DateTime(Convert.ToInt32(time.Substring(11)), 
-                    Convert.ToInt32(time.Substring(8, 2)), 
-                    Convert.ToInt32(time.Substring(5, 2)), 
-                    Convert.ToInt32(time.Substring(0, 2)), 
-                    Convert.ToInt32(time.Substring(3, 2)), 0);
-                Flight flight = new Flight(dt,
-                    nodes[j + 1].InnerText.Trim(),
-                    nodes[j + 2].InnerText.Trim(),
-                    logopath[i].Attributes["src"].Value,
-                    nodes[j + 3].InnerText.Trim(),
-                    nodes[j + 4].InnerText[0],
-                    nodes[j + 5].InnerText.Trim());;
-                flights.Add(flight);
-            }
-            return View(flights);
+            parser = new HtmlParser("departures");
+            HtmlDocument doc = new HtmlDocument();
+            doc.LoadHtml(parser.Node.InnerHtml);
+            var nodes = doc.DocumentNode.SelectNodes("//tr/td");
+            List<Flight> departures = flight.GetFlightsFromNodes(nodes);
+            return View(departures);
         }
 
         public IActionResult Arrivals()
         {
-            return View();
+            parser = new HtmlParser("arrivals");
+            HtmlDocument doc = new HtmlDocument();
+            doc.LoadHtml(parser.Node.InnerHtml);
+            var nodes = doc.DocumentNode.SelectNodes("//tr/td");
+            List<Flight> arrivals = flight.GetFlightsFromNodes(nodes);
+            return View(arrivals);
         }
     }
 }

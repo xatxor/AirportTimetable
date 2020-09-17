@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,14 +11,16 @@ namespace AirportTimetable.Models
     public class HtmlParser
     {
         HtmlDocument htmldoc;
-        public HtmlParser(string sortOrArr)
+        public HtmlNode Node;
+        public HtmlParser(string depOrArr)
         {
             HtmlWeb web = new HtmlWeb();
             web.OverrideEncoding = Encoding.UTF8;
-            if (sortOrArr == "sortie")
-                htmldoc = web.Load(@"http://www.vnukovo.ru/flights/online-timetable/#tab-sortie");
+            htmldoc = web.Load(@"http://www.vnukovo.ru/flights/online-timetable/#tab-arrivals");
+            if (depOrArr == "departures")
+                Node = htmldoc.GetElementbyId("sortie");
             else
-                htmldoc = web.Load(@"http://www.vnukovo.ru/flights/online-timetable/#tab-arrivals");
+                Node = htmldoc.GetElementbyId("arrivals");
         }
         public HtmlNodeCollection SelectNodes(string node)
         {
