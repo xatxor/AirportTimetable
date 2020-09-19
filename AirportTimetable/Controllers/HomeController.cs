@@ -24,7 +24,7 @@ namespace AirportTimetable.Controllers
             HtmlDocument doc = new HtmlDocument();
             doc.LoadHtml(parser.Node.InnerHtml);
             var nodes = doc.DocumentNode.SelectNodes("//tr/td");
-            List<Flight> departures = flight.GetFlightsFromNodes(nodes);
+            IEnumerable<Flight> departures = flight.GetFlightsFromNodes(nodes).Where(e => e.Time > DateTime.Now);
             return View(departures);
         }
 
@@ -34,7 +34,7 @@ namespace AirportTimetable.Controllers
             HtmlDocument doc = new HtmlDocument();
             doc.LoadHtml(parser.Node.InnerHtml);
             var nodes = doc.DocumentNode.SelectNodes("//tr/td");
-            List<Flight> arrivals = flight.GetFlightsFromNodes(nodes);
+            IEnumerable<Flight> arrivals = flight.GetFlightsFromNodes(nodes).Where(e => e.Time > DateTime.Now);
             return View(arrivals);
         }
     }
