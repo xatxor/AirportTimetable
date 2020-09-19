@@ -17,24 +17,25 @@ namespace AirportTimetable.Controllers
     public class HomeController : Controller
     {
         Flight flight = new Flight();
+        HtmlDocument doc = new HtmlDocument();
+        HtmlNodeCollection nodes;
+        List<Flight> flights;
         HtmlParser parser;
         public IActionResult Index()
         {
             parser = new HtmlParser("departures");
-            HtmlDocument doc = new HtmlDocument();
             doc.LoadHtml(parser.Node.InnerHtml);
-            var nodes = doc.DocumentNode.SelectNodes("//tr/td");
-            List<Flight> departures = flight.GetFlightsFromNodes(nodes);
-            return View(departures);
+            nodes = doc.DocumentNode.SelectNodes("//tr/td");
+            flights = flight.GetFlightsFromNodes(nodes);
+            return View(flights);
         }
         public IActionResult Arrivals()
         {
             parser = new HtmlParser("arrivals");
-            HtmlDocument doc = new HtmlDocument();
             doc.LoadHtml(parser.Node.InnerHtml);
-            var nodes = doc.DocumentNode.SelectNodes("//tr/td");
-            List<Flight> arrivals = flight.GetFlightsFromNodes(nodes);
-            return View(arrivals);
+            nodes = doc.DocumentNode.SelectNodes("//tr/td");
+            flights = flight.GetFlightsFromNodes(nodes);
+            return View(flights);
         }
     }
 }
