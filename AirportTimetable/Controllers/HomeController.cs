@@ -27,7 +27,6 @@ namespace AirportTimetable.Controllers
             List<Flight> departures = flight.GetFlightsFromNodes(nodes);
             return View(departures);
         }
-
         public IActionResult Arrivals()
         {
             parser = new HtmlParser("arrivals");

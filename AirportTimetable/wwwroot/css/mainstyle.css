@@ -1,10 +1,10 @@
 ﻿table {
-    border: 1px solid #ccc; /* граница всей таблицы */
+    border: 1px solid #ccc;
     width: 100%;
     border-collapse: collapse;
 }
 tr {
-    border: 1px solid #ccc; /* границы между строками */
+    border: 1px solid #ccc;
 }
 td, th {
     padding-left: 20px;
@@ -14,19 +14,14 @@ td, th {
     text-align: left;
     font-size: 40px;
 }
-.link {
-    text-align: right;
-    font-size: 40px;
-    color: #ccc;
-}
-.tdcenteralign{
+.tdcenteralign {
     text-align: center;
 }
-.maintitletext{
+.maintitletext {
     font-size: 100px;
     color: black;
 }
-.secondarytitletext{
+.secondarytitletext {
     font-size: 90px;
     color: #ccc;
 }
@@ -42,7 +37,7 @@ td, th {
     position: fixed;
     background: #e6e6e6;
 }
-body{
+body {
     margin: 0px;
 }
 #maindiv {
