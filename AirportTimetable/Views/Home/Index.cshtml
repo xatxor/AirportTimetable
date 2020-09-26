@@ -5,12 +5,14 @@
 </head>
 <body>
     @section Header{
-        @using (Ajax.BeginForm("Arrivals", new AjaxOptions { UpdateTargetId = "maindiv" }))
-        {
+        <div id="title">
             <span class="maintitletext">Вылеты  </span>
             <span class="secondarytitletext">(Departures)</span>
+        </div>
+        @using (Ajax.BeginForm("Arrivals", new AjaxOptions { UpdateTargetId = "maindiv" }))
+        {
             <button id="button" type="submit" />
-            }
         }
+    }
 </body>
 </html>
