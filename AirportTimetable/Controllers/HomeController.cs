@@ -11,31 +11,27 @@ using System.IO;
 using HtmlAgilityPack;
 using System.Text;
 using Microsoft.Extensions.Primitives;
+using System.Threading;
 
 namespace AirportTimetable.Controllers
 {
     public class HomeController : Controller
     {
-        HtmlDocument doc = new HtmlDocument();
-        HtmlNodeCollection nodes;
-        Flight flight = new Flight();
-        HtmlParser parser;
-        IEnumerable<Flight> flights;
+        TimetableHandler tt = new TimetableHandler();
         public IActionResult Index()
         {
-            parser = new HtmlParser("departures");
-            doc.LoadHtml(parser.Node.InnerHtml);
-            nodes = doc.DocumentNode.SelectNodes("//tr/td");
-            flights = flight.GetFlightsFromNodes(nodes).Where(e => e.Time > DateTime.Now);
-            return View(flights);
+            TimerCallback tm = new TimerCallback(Count);
+            // создаем таймер
+            Timer timer = new Timer(tm, null, 5000, 5000);
+            return View(tt.GetTimetable("departures"));
+        }
+        public void Count(object obj)
+        {
+            Arrivals();
         }
         public IActionResult Arrivals()
         {
-            parser = new HtmlParser("arrivals");
-            doc.LoadHtml(parser.Node.InnerHtml);
-            nodes = doc.DocumentNode.SelectNodes("//tr/td");
-            flights = flight.GetFlightsFromNodes(nodes).Where(e => e.Time > DateTime.Now);
-            return View(flights);
+            return View(tt.GetTimetable("arrivals"));
         }
     }
 }
