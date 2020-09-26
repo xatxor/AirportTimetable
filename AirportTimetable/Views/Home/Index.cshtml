@@ -5,7 +5,6 @@
     <base href="content/">
     <meta charset="utf-8">
     <title>Вылет</title>
-    <link rel="stylesheet" type="text/css" href="~/styles/mainstyle.css" />
     @Styles.Render("~/Content/mainstyle.css")
     @Scripts.Render("~/scripts/jquery-1.10.2.min.js")
     @Scripts.Render("~/scripts/validate.min.js")
@@ -13,28 +12,38 @@
     @Scripts.Render("~/scripts/jquery.unobtrusive-ajax.js")
 </head>
 <body>
+    <script>
+        function click() {
+            document.getElementById("button").click();
+        }
+        setTimeout(click, 3000);
+    </script>
     <div id="header">
         <div>
-            <span class="maintitletext">Вылеты  </span>
-            <span class="secondarytitletext">(Departures)</span>
+            @using (Ajax.BeginForm("Arrivals", new AjaxOptions { UpdateTargetId = "maindiv" }))
+            {
+                <span class="maintitletext">Вылеты  </span>
+                <span class="secondarytitletext">(Departures)</span>
+                <input id="button" type="submit"/>
+            }
         </div>
     </div>
     <div id="maindiv">
         <table>
             @foreach (var item in Model)
             {
-            <tr>
-                <td width="10%" class="tdcenteralign">
-                    <span>@item.Time.ToString("HH:mm")</span>
-                    <span class="link">@item.Time.ToString("dd/MM/yyyy")</span>
-                </td>
-                <td width="10%">@item.Name</td>
-                <td width= "15%">@item.Company</td>
-                <td><img width="120" src = "@item.CompanyLogoPath"/></td>
-                <td>@item.City</td>
-                <td width ="5%" class="tdcenteralign">@item.Terminal</td>
-                <td width="25%">@item.Status</td>
-            </tr>
+                <tr>
+                    <td width="10%" class="tdcenteralign">
+                        <span>@item.Time.ToString("HH:mm")</span>
+                        <span class="link">@item.Time.ToString("dd/MM/yyyy")</span>
+                    </td>
+                    <td width="10%">@item.Name</td>
+                    <td width="15%">@item.Company</td>
+                    <td><img width="120" src="@item.CompanyLogoPath" /></td>
+                    <td>@item.City</td>
+                    <td width="5%" class="tdcenteralign">@item.Terminal</td>
+                    <td width="25%">@item.Status</td>
+                </tr>
             }
         </table>
     </div>
