@@ -3,22 +3,20 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using AirportTimetable.Models;
 using System.Net;
 using System.IO;
 using HtmlAgilityPack;
 using System.Text;
-using Microsoft.Extensions.Primitives;
 using System.Threading;
+using System.Web.Mvc;
 
 namespace AirportTimetable.Controllers
 {
     public class HomeController : Controller
     {
         TimetableHandler tt = new TimetableHandler();
-        public IActionResult Index()
+        public ActionResult Index()
         {
             TimerCallback tm = new TimerCallback(Count);
             // создаем таймер
@@ -29,7 +27,7 @@ namespace AirportTimetable.Controllers
         {
             Arrivals();
         }
-        public IActionResult Arrivals()
+        public ActionResult Arrivals()
         {
             return View(tt.GetTimetable("arrivals"));
         }
