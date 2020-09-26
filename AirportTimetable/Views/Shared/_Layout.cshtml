@@ -11,10 +11,30 @@
 </head>
 <body>
     <script>
+        window.onload = function () {
+            var height = document.body.scrollHeight;
+            var scrolled;
+            var timer;
+            scrolled = window.pageYOffset;
+            setTimeout(scrollToTop, 3000)
+            function scrollToTop() {
+                if (scrolled < height) {
+                    window.scrollTo(0, scrolled);
+                    scrolled = scrolled + 1;
+                    timer = setTimeout(scrollToTop, 20);
+                }
+                else {
+                    clearTimeout(timer);
+                    window.scrollTo(0, height);
+                }
+            }
+        }
+    </script>
+    <script>
         function click() {
             document.getElementById("button").click();
         }
-        setTimeout(click, 3000);
+        setTimeout(click, 10000);
     </script>
     <div id="header">
         @RenderSection("Header")
