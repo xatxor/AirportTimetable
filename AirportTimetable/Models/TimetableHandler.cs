@@ -18,18 +18,15 @@ namespace AirportTimetable.Models
                     nodes.Remove(nodes[j]);
                 var logopath = nodes[j + 3].SelectNodes("//td/img");
                 string time = nodes[j].InnerText.Trim();
-                DateTime dt = new DateTime(Convert.ToInt32(time.Substring(11)),
-                    Convert.ToInt32(time.Substring(8, 2)),
-                    Convert.ToInt32(time.Substring(5, 2)),
-                    Convert.ToInt32(time.Substring(0, 2)),
-                    Convert.ToInt32(time.Substring(3, 2)), 0);
+                DateTime dt = TimeHandler(time);
+                string status = StatusHandler(nodes[j + 5].InnerText.Trim());
                 Flight flight = new Flight(dt,
                     nodes[j + 1].InnerText.Trim(),
                     nodes[j + 2].InnerText.Trim(),
                     logopath[i].Attributes["src"].Value,
                     nodes[j + 3].InnerText.Trim(),
                     nodes[j + 4].InnerText[0],
-                    nodes[j + 5].InnerText.Trim()); ;
+                    status);
                 flights.Add(flight);
             }
             return flights;
@@ -42,6 +39,62 @@ namespace AirportTimetable.Models
             HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//tr/td");
             IEnumerable<Flight> flights = GetFlightsFromNodes(nodes).Where(e => e.Time > DateTime.Now);
             return flights;
+        }
+        public DateTime TimeHandler(string time)
+        {
+            DateTime dt = new DateTime(Convert.ToInt32(time.Substring(11)),
+            Convert.ToInt32(time.Substring(8, 2)),
+            Convert.ToInt32(time.Substring(5, 2)),
+            Convert.ToInt32(time.Substring(0, 2)),
+            Convert.ToInt32(time.Substring(3, 2)), 0); 
+            return dt;
+        }
+        public string StatusHandler(string status)
+        {
+            string result = "-";
+            if (status == "-")
+                return result;
+            string firstWords = status.Split(' ')[0] + " " + status.Split(' ')[1];
+            switch (firstWords)
+            {
+                case "Совершил посадку":
+                    result = "Прилетел";
+                    break;
+                case "Идёт посадка.":
+                    result = "Идет посадка";
+                    break;
+                case "Задержан до":
+                    result = "Задержан";
+                    break;
+                case "Регистрация закончена.":
+                    result = "Регистрация закончена";
+                    break;
+                case "Идет регистрация.":
+                    result = "Идет регистрация";
+                    break;
+                case "Регистрация с":
+                    result = "-";
+                    break;
+                case "Посадка закончена.":
+                    result = "Вылетает";
+                    break;
+                case "Закончена выд.":
+                    result = "Прилетел";
+                    break;
+                case "Прилетел в":
+                    result = "Прилетел";
+                    break;
+                case "Ожидается в":
+                    result = "Ожидается";
+                    break;
+                case "Вылетел в":
+                    result = "Ожидается";
+                    break;
+                case "Не вылетел.":
+                    result = "Ожидается";
+                    break;
+            }
+            return result;
         }
     }
 }
