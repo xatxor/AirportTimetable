@@ -20,11 +20,12 @@ namespace AirportTimetable.Models
                 string time = nodes[j].InnerText.Trim();
                 DateTime dt = TimeHandler(time);
                 string status = StatusHandler(nodes[j + 5].InnerText.Trim());
+                string city = CityHandler(nodes[j + 3].InnerText.Trim());
                 Flight flight = new Flight(dt,
                     nodes[j + 1].InnerText.Trim(),
                     nodes[j + 2].InnerText.Trim(),
                     logopath[i].Attributes["src"].Value,
-                    nodes[j + 3].InnerText.Trim(),
+                    city,
                     nodes[j + 4].InnerText[0],
                     status);
                 flights.Add(flight);
@@ -61,16 +62,16 @@ namespace AirportTimetable.Models
                     result = "Прилетел";
                     break;
                 case "Идёт посадка.":
-                    result = "Идет посадка";
+                    result = "Посадка";
                     break;
                 case "Задержан до":
                     result = "Задержан";
                     break;
                 case "Регистрация закончена.":
-                    result = "Регистрация закончена";
+                    result = "Посадка";
                     break;
                 case "Идет регистрация.":
-                    result = "Идет регистрация";
+                    result = "Регистрация";
                     break;
                 case "Регистрация с":
                     result = "-";
@@ -93,6 +94,18 @@ namespace AirportTimetable.Models
                 case "Не вылетел.":
                     result = "Ожидается";
                     break;
+            }
+            return result;
+        }
+        public string CityHandler(string city)
+        {
+            string result = city;
+            for (int i = 0; i < city.Length; i++)
+            {
+                if (city[i] == '(')
+                {
+                    result = city.Substring(0, i);
+                }
             }
             return result;
         }
