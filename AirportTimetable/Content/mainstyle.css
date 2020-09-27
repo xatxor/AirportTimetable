@@ -31,18 +31,38 @@ td, th {
 }
 #header {
     margin-top: -150px;
-    padding-left: 50px;
+    position: fixed;
     width: 100%;
     height: 150px;
-    position: fixed;
     background: #ffffff;
     border-bottom: 1px solid #ccc;
+}
+footer {
+    width: 100%;
+    position: fixed;
+    height: 100px;
+    bottom: 0px;
+    background: #ffffff;
+    border-top: 1px solid #ccc;
+}
+#footer {
+    text-align: justify;
+    background: #ffffff;
+    height: auto;
+    padding: 20px 80px;
+    font-size: 50px;
+}
+#footer::after {
+    content: '';
+    display: inline-block;
+    width: 100%;
 }
 body {
     margin: 0px;
 }
 #maindiv {
     margin-top: 150px;
+    margin-bottom: 100px;
 }
 #button {
     display: none;

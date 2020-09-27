@@ -29,13 +29,13 @@
                 }
             }
         }
-    </script> -->
+    </script>
     <script>
         function click() {
             document.getElementById("button").click();
         }
         setTimeout(click, 10000);
-    </script>
+    </script>  -->
     <div id="header">
         @RenderSection("Header")
     </div>
@@ -55,5 +55,11 @@
             }
         </table>
     </div>
+    <footer>
+        <div id="footer">
+            <span>@DateTime.Now.ToString("dd.MM.yyyy")</span>
+            <span>@DateTime.Now.ToString("HH:mm")</span>
+        </div>
+    </footer>
 </body>
 </html>
