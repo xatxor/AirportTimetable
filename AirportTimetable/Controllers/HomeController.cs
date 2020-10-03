@@ -18,14 +18,7 @@ namespace AirportTimetable.Controllers
         TimetableHandler tt = new TimetableHandler();
         public ActionResult Index()
         {
-            TimerCallback tm = new TimerCallback(Count);
-            // создаем таймер
-            Timer timer = new Timer(tm, null, 5000, 5000);
             return View(tt.GetTimetable("departures"));
-        }
-        public void Count(object obj)
-        {
-            Arrivals();
         }
         public ActionResult Arrivals()
         {

@@ -12,7 +12,7 @@ namespace AirportTimetable.Models
         public List<Flight> GetFlightsFromNodes(HtmlNodeCollection nodes)
         {
             List<Flight> flights = new List<Flight>();
-            for (int i = 0; i < nodes.Count; i++)
+            for (int i = 0; i < nodes.Count-1; i++)
             {
                 var tds = nodes[i].SelectNodes(".//td");
                 DateTime dt = new DateTime();
@@ -20,57 +20,71 @@ namespace AirportTimetable.Models
                 string company = "";
                 string logopath = "";
                 string city = "";
-                char terminal = 'A';
+                char terminal = ' ';
                 string status = "";
                 for (int j = 0; j < tds.Count; j++)
                 {
                     var current = tds[j].InnerText.Trim();
-                    switch (i)
+                    switch (j) //если возникает ошибка, значит нужной записи нет - устанавливаем значение след свойству
                     {
-                        case 1:
+                        case 0:
                             try
                             {
                                 string time = current;
                                 dt = TimeHandler(time);
                             }
-                            catch (Exception e) { break; }
+                            catch (Exception e) { name = current; break; }
+                            break;
+                        case 1:
+                            if (name == "")
+                                name = current;
                             break;
                         case 2:
-                            name = current;
+                            try
+                            {
+                                var img = tds[j].
+                                    SelectSingleNode(".//img");
+                                if (img != null)
+                                    logopath = img.Attributes["src"].Value;
+                                else
+                                    city = CityHandler(current);
+                            }
+                            catch (Exception e) { break; }
                             break;
                         case 3:
-                            company = current;
+                            if (city == "")
+                            {
+                                try
+                                {
+                                    if (current.Count() == 1)
+                                        terminal = current[0];
+                                    else
+                                        city = CityHandler(current);
+                                }
+                                catch (Exception e) { break; }
+                            }
                             break;
                         case 4:
-                            try
-                            {
-                                logopath = tds[j].
-                                    SelectSingleNode("//td/img").
-                                    Attributes["src"].
-                                    Value;
+                            if (terminal == ' ') {
+                                try
+                                {
+                                    if (current.Count() == 1)
+                                        terminal = current[0];
+                                    else
+                                        status = StatusHandler(current);
+                                }
+                                catch (Exception e) { break; }
                             }
-                            catch (Exception e) { break; }
                             break;
                         case 5:
-                            try
+                            if (status == "")
                             {
-                                city = CityHandler(current);
+                                try
+                                {
+                                    status = StatusHandler(current);
+                                }
+                                catch (Exception e) { break; }
                             }
-                            catch(Exception e) { break; }
-                            break;
-                        case 6:
-                            try
-                            {
-                                terminal = current[0];
-                            }
-                            catch (Exception e) { break; }
-                            break;
-                        case 7:
-                            try
-                            {
-                                status = StatusHandler(current);
-                            }
-                            catch(Exception e) { break; }
                             break;
                     }
                 }
