@@ -1,6 +1,7 @@
 ﻿using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,22 +12,89 @@ namespace AirportTimetable.Models
         public List<Flight> GetFlightsFromNodes(HtmlNodeCollection nodes)
         {
             List<Flight> flights = new List<Flight>();
-            for (int i = 0; i < nodes.Count / 6; i++)
+            for (int i = 0; i < nodes.Count-1; i++)
             {
-                int j = 6 * i;
-                if (nodes[j].InnerText == "" || nodes[j].InnerText == " ")
-                    nodes.Remove(nodes[j]);
-                var logopath = nodes[j + 3].SelectNodes("//td/img");
-                string time = nodes[j].InnerText.Trim();
-                DateTime dt = TimeHandler(time);
-                string status = StatusHandler(nodes[j + 5].InnerText.Trim());
-                string city = CityHandler(nodes[j + 3].InnerText.Trim());
-                Flight flight = new Flight(dt,
-                    nodes[j + 1].InnerText.Trim(),
-                    nodes[j + 2].InnerText.Trim(),
-                    logopath[i].Attributes["src"].Value,
+                var tds = nodes[i].SelectNodes(".//td");
+                DateTime dt = new DateTime();
+                string name = "";
+                string company = "";
+                string logopath = "";
+                string city = "";
+                char terminal = ' ';
+                string status = "";
+                for (int j = 0; j < tds.Count; j++)
+                {
+                    var current = tds[j].InnerText.Trim();
+                    switch (j) //если возникает ошибка, значит нужной записи нет - устанавливаем значение след свойству
+                    {
+                        case 0:
+                            try
+                            {
+                                string time = current;
+                                dt = TimeHandler(time);
+                            }
+                            catch (Exception e) { name = current; break; }
+                            break;
+                        case 1:
+                            if (name == "")
+                                name = current;
+                            break;
+                        case 2:
+                            try
+                            {
+                                var img = tds[j].
+                                    SelectSingleNode(".//img");
+                                if (img != null)
+                                    logopath = img.Attributes["src"].Value;
+                                else
+                                    city = CityHandler(current);
+                            }
+                            catch (Exception e) { break; }
+                            break;
+                        case 3:
+                            if (city == "")
+                            {
+                                try
+                                {
+                                    if (current.Count() == 1)
+                                        terminal = current[0];
+                                    else
+                                        city = CityHandler(current);
+                                }
+                                catch (Exception e) { break; }
+                            }
+                            break;
+                        case 4:
+                            if (terminal == ' ') {
+                                try
+                                {
+                                    if (current.Count() == 1)
+                                        terminal = current[0];
+                                    else
+                                        status = StatusHandler(current);
+                                }
+                                catch (Exception e) { break; }
+                            }
+                            break;
+                        case 5:
+                            if (status == "")
+                            {
+                                try
+                                {
+                                    status = StatusHandler(current);
+                                }
+                                catch (Exception e) { break; }
+                            }
+                            break;
+                    }
+                }
+                Flight flight = new Flight(
+                    dt,
+                    name,
+                    company,
+                    logopath,
                     city,
-                    nodes[j + 4].InnerText[0],
+                    terminal,
                     status);
                 flights.Add(flight);
             }
@@ -37,8 +105,9 @@ namespace AirportTimetable.Models
             HtmlParser parser = new HtmlParser(depOrArr);
             HtmlDocument doc = new HtmlDocument();
             doc.LoadHtml(parser.Node.InnerHtml);
-            HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//tr/td");
-            IEnumerable<Flight> flights = GetFlightsFromNodes(nodes).Where(e => e.Time > DateTime.Now);
+            HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//tr");
+            IEnumerable<Flight> flights = GetFlightsFromNodes(nodes);
+//                Where(e => e.Time > DateTime.Now);
             return flights;
         }
         public DateTime TimeHandler(string time)
@@ -47,13 +116,13 @@ namespace AirportTimetable.Models
             Convert.ToInt32(time.Substring(8, 2)),
             Convert.ToInt32(time.Substring(5, 2)),
             Convert.ToInt32(time.Substring(0, 2)),
-            Convert.ToInt32(time.Substring(3, 2)), 0); 
+            Convert.ToInt32(time.Substring(3, 2)), 0);
             return dt;
         }
         public string StatusHandler(string status)
         {
             string result = "-";
-            if (status == "-")
+            if (status.Split(' ').Length < 2)
                 return result;
             string firstWords = status.Split(' ')[0] + " " + status.Split(' ')[1];
             switch (firstWords)
