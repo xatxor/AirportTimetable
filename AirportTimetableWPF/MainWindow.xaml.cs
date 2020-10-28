@@ -1,9 +1,11 @@
 ﻿using AirportTimetable.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -22,35 +24,40 @@ namespace AirportTimetableWPF
     public partial class MainWindow : Window
     {
         TimetableHandler tt = new TimetableHandler();
-        List<Flight> timetable;
         public MainWindow()
         {
             InitializeComponent();
         }
-
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             //полноэкранный режим
             this.WindowStyle = WindowStyle.None;
             this.WindowState = WindowState.Maximized;
+            ObservableCollection<Flight> timetable = new ObservableCollection<Flight>(tt.GetTimetable("departures"));
+            GetTimetable(timetable);
+        }
+        private void GetTimetable(ObservableCollection<Flight> timetable)
+        {
             date.Content = DateTime.Today.ToString("dd.MM.yyyy");
             time.Content = DateTime.Now.ToString("HH:mm");
-            timetable = tt.GetTimetable("departures").ToList();
             firstColumn.DataContext = timetable;
             if (timetable.Count > 23)
             {
-                firstColumn.DataContext = timetable.GetRange(0, 23);
+                firstColumn.DataContext = timetable.Take(23);
                 if (timetable.Count <= 46)
-                    secondColumn.DataContext = timetable.GetRange(23, timetable.Count - 23);
+                    secondColumn.DataContext = timetable.Skip(23).Take(timetable.Count - 23);
                 else
                 {
-                    secondColumn.DataContext = timetable.GetRange(23, 23);
+                    secondColumn.DataContext = timetable.Skip(23).Take(23);
                     if (timetable.Count <= 69)
-                        thirdColumn.DataContext = timetable.GetRange(46, timetable.Count - 46);
+                        thirdColumn.DataContext = timetable.Skip(46).Take(timetable.Count - 23);
                     else
-                        thirdColumn.DataContext = timetable.GetRange(46, 23);
+                        thirdColumn.DataContext = timetable.Skip(46).Take(23);
                 }
             }
+        }
+        private void Window_Closed(object sender, EventArgs e)
+        {
         }
     }
 }
