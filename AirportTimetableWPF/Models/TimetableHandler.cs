@@ -1,4 +1,5 @@
-﻿using HtmlAgilityPack;
+﻿using AirportTimetableWPF.Models;
+using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,8 +10,10 @@ namespace AirportTimetable.Models
 {
     public class TimetableHandler
     {
-        public List<Flight> GetFlightsFromNodes(HtmlNodeCollection nodes)
+        Localization local = new Localization();
+        public List<Flight> GetFlightsFromNodes(HtmlNodeCollection nodes, string lang)
         {
+            Localization local = new Localization();
             List<Flight> flights = new List<Flight>();
             for (int i = 0; i < nodes.Count-1; i++)
             {
@@ -93,20 +96,20 @@ namespace AirportTimetable.Models
                     name,
                     company,
                     logopath,
-                    city,
+                    local.Translate(city, "Cities", lang),
                     terminal,
-                    status);
+                    local.Translate(status, "Statuses", lang));
                 flights.Add(flight);
             }
             return flights;
         }
-        public IEnumerable<Flight> GetTimetable(string depOrArr)
+        public IEnumerable<Flight> GetTimetable(string depOrArr, string lang)
         {
             HtmlParser parser = new HtmlParser(depOrArr);
             HtmlDocument doc = new HtmlDocument();
             doc.LoadHtml(parser.Node.InnerHtml);
             HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//tr");
-            IEnumerable<Flight> flights = GetFlightsFromNodes(nodes).
+            IEnumerable<Flight> flights = GetFlightsFromNodes(nodes, lang).
                 Where(e => e.Time > DateTime.Now);
             return flights;
         }

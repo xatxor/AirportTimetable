@@ -1,0 +1,6 @@
+﻿Прилетел*Arrived
+Посадка*Landing
+Задержан*Detained
+Регистрация*Registration
+Вылетает*Departures
+Ожидается*Expected

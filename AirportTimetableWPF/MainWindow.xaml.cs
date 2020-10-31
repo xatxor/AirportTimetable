@@ -33,7 +33,7 @@ namespace AirportTimetableWPF
             //полноэкранный режим
             this.WindowStyle = WindowStyle.None;
             this.WindowState = WindowState.Maximized;
-            ObservableCollection<Flight> timetable = new ObservableCollection<Flight>(tt.GetTimetable("departures"));
+            ObservableCollection<Flight> timetable = new ObservableCollection<Flight>(tt.GetTimetable("departures", "Ru"));
             GetTimetable(timetable);
         }
         private void GetTimetable(ObservableCollection<Flight> timetable)
