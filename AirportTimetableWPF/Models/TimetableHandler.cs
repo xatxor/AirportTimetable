@@ -109,8 +109,8 @@ namespace AirportTimetable.Models
             HtmlDocument doc = new HtmlDocument();
             doc.LoadHtml(parser.Node.InnerHtml);
             HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//tr");
-            IEnumerable<Flight> flights = GetFlightsFromNodes(nodes, lang).
-                Where(e => e.Time > DateTime.Now);
+            IEnumerable<Flight> flights = GetFlightsFromNodes(nodes, lang);
+                //Where(e => e.Time > DateTime.Now);
             return flights;
         }
         public DateTime TimeHandler(string time)

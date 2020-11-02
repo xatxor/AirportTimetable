@@ -1,10 +1,8 @@
-﻿using AirportTimetable.Models;
-using AirportTimetableWPF.Models;
+﻿using AirportTimetableWPF.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,21 +19,30 @@ using System.Windows.Shapes;
 namespace AirportTimetableWPF
 {
     /// <summary>
-    /// Логика взаимодействия для TimeTableColumn.xaml
+    /// Логика взаимодействия для Settings.xaml
     /// </summary>
-    public partial class TimeTableColumn : UserControl
+    public partial class Settings : UserControl, INotifyPropertyChanged
     {
-        public List<Flight> context = new List<Flight>();
         public Property Font = new Property();
-        public TimeTableColumn()
+        public Settings()
         {
             InitializeComponent();
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            list.DataContext = Font;
-            list.ItemsSource = context;
+            slider1.DataContext = Font.Obj;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Font.Obj = (int)slider1.Value;
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged([CallerMemberName] string prop = "")
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(prop));
         }
     }
 }

@@ -1,7 +1,9 @@
 ﻿using AirportTimetable.Models;
+using AirportTimetableWPF.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,6 +26,9 @@ namespace AirportTimetableWPF
     public partial class MainWindow : Window
     {
         TimetableHandler tt = new TimetableHandler();
+        Context context;
+        public Property Font = new Property();
+        ObservableCollection<Flight> timetable;
         public MainWindow()
         {
             InitializeComponent();
@@ -33,31 +38,44 @@ namespace AirportTimetableWPF
             //полноэкранный режим
             this.WindowStyle = WindowStyle.None;
             this.WindowState = WindowState.Maximized;
-            ObservableCollection<Flight> timetable = new ObservableCollection<Flight>(tt.GetTimetable("departures", "Ru"));
+            timetable = new ObservableCollection<Flight>(tt.GetTimetable("departures", "Ru"));
+            context = new Context(timetable);
+            context.FillTimeTable(10);
             GetTimetable(timetable);
+            Font = settings.Font;
         }
         private void GetTimetable(ObservableCollection<Flight> timetable)
         {
             date.Content = DateTime.Today.ToString("dd.MM.yyyy");
             time.Content = DateTime.Now.ToString("HH:mm");
-            firstColumn.DataContext = timetable;
-            if (timetable.Count > 23)
-            {
-                firstColumn.DataContext = timetable.Take(23);
-                if (timetable.Count <= 46)
-                    secondColumn.DataContext = timetable.Skip(23).Take(timetable.Count - 23);
-                else
-                {
-                    secondColumn.DataContext = timetable.Skip(23).Take(23);
-                    if (timetable.Count <= 69)
-                        thirdColumn.DataContext = timetable.Skip(46).Take(timetable.Count - 23);
-                    else
-                        thirdColumn.DataContext = timetable.Skip(46).Take(23);
-                }
-            }
+            timetablegrid.Children.Clear();
+            TimeTableColumn firstColumn, secondColumn, thirdColumn = new TimeTableColumn();
+            timetablegrid.Children.Add(firstColumn = new TimeTableColumn());
+            firstColumn.Margin = new Thickness(10, 110, 0, 0);
+            firstColumn.HorizontalAlignment = HorizontalAlignment.Left;
+            firstColumn.VerticalAlignment = VerticalAlignment.Top;
+            timetablegrid.Children.Add(secondColumn = new TimeTableColumn());
+            secondColumn.Margin = new Thickness(0, 110, 0, 0);
+            secondColumn.HorizontalAlignment = HorizontalAlignment.Center;
+            secondColumn.VerticalAlignment = VerticalAlignment.Top;
+            timetablegrid.Children.Add(thirdColumn = new TimeTableColumn());
+            thirdColumn.Margin = new Thickness(0, 110, 10, 0);
+            thirdColumn.HorizontalAlignment = HorizontalAlignment.Right;
+            thirdColumn.VerticalAlignment = VerticalAlignment.Top;
+            firstColumn.context = context.first;
+            secondColumn.context = context.second;
+            thirdColumn.context = context.third;
+            firstColumn.Font.Obj = Font.Obj;
+            secondColumn.Font.Obj = Font.Obj;
+            thirdColumn.Font.Obj = Font.Obj;
         }
         private void Window_Closed(object sender, EventArgs e)
         {
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            GetTimetable(timetable);
         }
     }
 }

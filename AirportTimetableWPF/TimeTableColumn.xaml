@@ -5,9 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AirportTimetableWPF"
              mc:Ignorable="d" 
-             d:DesignHeight="800" d:DesignWidth="630">
-    <Grid>
-        <ItemsControl x:Name="list" ItemsSource="{Binding}" FontSize="22">
+             d:DesignHeight="800" d:DesignWidth="630" Loaded="UserControl_Loaded">
+    <Grid x:Name="dfg">
+        <ItemsControl x:Name="list" FontSize="{Binding Obj}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Grid>
@@ -20,7 +20,7 @@
                             <ColumnDefinition Width="150"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="35"></RowDefinition>
+                            <RowDefinition Height="1*"></RowDefinition>
                         </Grid.RowDefinitions>
                         <TextBlock Grid.Column="0" Text="{Binding TimeString}" VerticalAlignment="Center" Margin="5,0,5,0"/>
                         <TextBlock Grid.Column="1" Text="{Binding Name}" VerticalAlignment="Center" Margin="5,0,5,0"/>

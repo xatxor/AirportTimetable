@@ -9,11 +9,12 @@
     <Grid>
         <Grid HorizontalAlignment="Center" VerticalAlignment="Top" Height="105" Width="1920" Background="#FF272727"/>
         <Label Content="Вылеты" Margin="0,19,0,0" Foreground="White" FontSize="40" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-        <local:TimeTableColumn x:Name="firstColumn" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,110,0,0"/>
-        <local:TimeTableColumn x:Name="secondColumn" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,110,0,0"/>
-        <local:TimeTableColumn x:Name="thirdColumn" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,110,10,0"/>
+        <Grid x:Name="timetablegrid">
+        </Grid>
         <Grid HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="70" Width="1920" Background="#FF272727"/>
         <Label x:Name="date" Margin="20,0,0,10" Foreground="White" FontSize="30" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
         <Label x:Name="time" Margin="0,0,20,10" Foreground="White" FontSize="30" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+        <local:Settings x:Name="settings" HorizontalAlignment="Left" Margin="1612,680,0,0" VerticalAlignment="Top"/>
+        <Button Content="Button" HorizontalAlignment="Right" Margin="0,0,149,121" VerticalAlignment="Bottom" Width="75" Click="Button_Click" Height="25"/>
     </Grid>
 </Window>
