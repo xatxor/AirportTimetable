@@ -24,6 +24,10 @@ namespace AirportTimetableWPF
     public partial class Settings : UserControl, INotifyPropertyChanged
     {
         public Property Font = new Property();
+        public Property showInterval = new Property(5000);
+        public Property loadInterval = new Property(5000);
+        public Property inSpan = new Property(0);
+        public Property outSpan = new Property(0);
         public Settings()
         {
             InitializeComponent();
@@ -32,11 +36,19 @@ namespace AirportTimetableWPF
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             slider1.DataContext = Font.Obj;
+            showInt.Text = Convert.ToString(showInterval.Obj / 1000);
+            loadInt.Text = Convert.ToString(loadInterval.Obj / 1000);
+            inSp.Text = inSpan.Obj.ToString();
+            outSp.Text = outSpan.Obj.ToString();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Font.Obj = (int)slider1.Value;
+            showInterval.Obj = Convert.ToInt32(showInt.Text) * 1000;
+            loadInterval.Obj = Convert.ToInt32(loadInt.Text) * 1000;
+            inSpan.Obj = Convert.ToInt32(inSp.Text);
+            outSpan.Obj = Convert.ToInt32(outSp.Text);
         }
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")

@@ -103,14 +103,14 @@ namespace AirportTimetable.Models
             }
             return flights;
         }
-        public IEnumerable<Flight> GetTimetable(string depOrArr, string lang)
+        public IEnumerable<Flight> GetTimetable(string depOrArr, string lang, int hours)
         {
             HtmlParser parser = new HtmlParser(depOrArr);
             HtmlDocument doc = new HtmlDocument();
             doc.LoadHtml(parser.Node.InnerHtml);
             HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//tr");
-            IEnumerable<Flight> flights = GetFlightsFromNodes(nodes, lang);
-                //Where(e => e.Time > DateTime.Now);
+            IEnumerable<Flight> flights = GetFlightsFromNodes(nodes, lang).
+                Where(e => e.Time > DateTime.Now.AddHours(hours));
             return flights;
         }
         public DateTime TimeHandler(string time)

@@ -7,9 +7,17 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" Loaded="UserControl_Loaded">
     <Grid x:Name="maingrid" Background="White">
-        <Label Content="Размер шрифта" Margin="15,10,110,252" Width="175" FontSize="20"/>
-        <Slider Name="slider1" Value="{Binding Obj,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="15,48,49,223" Minimum="12" Maximum="50" TickPlacement="BottomRight" TickFrequency="2" IsSnapToTickEnabled="True"/>
-        <TextBox Text="{Binding ElementName=slider1, Path=Value, UpdateSourceTrigger=PropertyChanged}" Margin="259,47,10,223" FontSize="20"/>
-        <Button Content="Сохранить" HorizontalAlignment="Center" Margin="176,0,50,20" VerticalAlignment="Bottom" Width="75" Click="Button_Click" Height="25"/>
+        <TextBlock Text="Размер шрифта" Margin="15,10,110,252" Width="175" FontSize="16" Grid.ColumnSpan="2"/>
+        <Slider Name="slider1" Value="{Binding Obj,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="15,37,50,234" Minimum="12" Maximum="50" TickPlacement="BottomRight" TickFrequency="2" IsSnapToTickEnabled="True" Grid.ColumnSpan="2"/>
+        <TextBox Text="{Binding ElementName=slider1, Path=Value, UpdateSourceTrigger=PropertyChanged}" Margin="256,29,10,241" FontSize="20"/>
+        <TextBlock Text="Интервал обновления экрана" Margin="15,73,49,189" FontSize="16" Grid.ColumnSpan="2"/>
+        <TextBox x:Name="showInt" Margin="256,74,10,196" FontSize="20"/>
+        <TextBlock Text="Интервал обновления данных" Margin="15,111,49,151" FontSize="16" Grid.ColumnSpan="2"/>
+        <TextBox x:Name="loadInt" Margin="256,112,10,158" FontSize="20"/>
+        <TextBlock Text="C какого часа от сейчас показывать прилет (в часах)" Margin="15,149,49,104" FontSize="16" TextWrapping="Wrap" Grid.ColumnSpan="2"/>
+        <TextBox x:Name="inSp" Margin="256,155,10,115" FontSize="20"/>
+        <TextBlock Text="C какого часа от сейчас показывать вылет (в часах)" Margin="15,199,49,54" FontSize="16" TextWrapping="Wrap" Grid.ColumnSpan="2"/>
+        <TextBox x:Name="outSp" Margin="256,206,10,64" FontSize="20"/>
+        <Button Content="Сохранить" HorizontalAlignment="Center" Margin="0,0,0,20" VerticalAlignment="Bottom" Width="74" Click="Button_Click" Height="25" Grid.Column="1"/>
     </Grid>
 </UserControl>
