@@ -18,10 +18,10 @@ namespace AirportTimetableWPF.Models
         public Dictionary<string, string> ChStatuses { get; private set; }
         public Localization()
         {
-            EnCities = GetTranslations(AirportTimetableWPF.Properties.Resources.EnCities);
-            EnStatuses = GetTranslations(AirportTimetableWPF.Properties.Resources.EnStatuses);
-            ChCities = GetTranslations(AirportTimetableWPF.Properties.Resources.ChCities);
-            ChStatuses = GetTranslations(AirportTimetableWPF.Properties.Resources.ChStatuses);
+            EnCities = GetTranslations(Resources.EnCities);
+            EnStatuses = GetTranslations(Resources.EnStatuses);
+            ChCities = GetTranslations(Resources.ChCities);
+            ChStatuses = GetTranslations(Resources.ChStatuses);
         }
         private Dictionary<string, string> GetTranslations(string res)
         {

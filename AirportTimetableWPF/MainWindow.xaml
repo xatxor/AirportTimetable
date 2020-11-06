@@ -8,12 +8,13 @@
         Title="MainWindow" Height="1080" Width="1920" Loaded="Window_Loaded" Closed="Window_Closed">
     <Grid>
         <Grid HorizontalAlignment="Center" VerticalAlignment="Top" Height="105" Width="1920" Background="#FF272727"/>
-        <Label Content="Вылеты" Margin="0,19,0,0" Foreground="White" FontSize="40" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+        <Label x:Name="titleLbl" Margin="0,19,0,0" Foreground="White" FontSize="40" VerticalAlignment="Top" HorizontalAlignment="Center"/>
         <Grid x:Name="timetablegrid">
         </Grid>
         <Grid HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="70" Width="1920" Background="#FF272727"/>
         <Label x:Name="date" Margin="20,0,0,10" Foreground="White" FontSize="30" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
         <Label x:Name="time" Margin="0,0,20,10" Foreground="White" FontSize="30" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
-        <local:Settings x:Name="settings" HorizontalAlignment="Left" Margin="1612,576,0,0" VerticalAlignment="Top"/>
+        <local:Settings x:Name="settings" HorizontalAlignment="Right" Margin="0,0,0,70" VerticalAlignment="Bottom" Width="300" Height="400"/>
+        <Button x:Name="settingsBtn" Content="Настройки" HorizontalAlignment="Right" Margin="0,45,56,0" VerticalAlignment="Top" Width="75" Click="settingsBtn_Click"/>
     </Grid>
 </Window>

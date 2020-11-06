@@ -39,6 +39,7 @@ namespace AirportTimetableWPF
         private int loadEnumerator = 1;
         Timer loadTimer;
         Timer showTimer;
+        string title;
         public MainWindow()
         {
             InitializeComponent();
@@ -63,39 +64,58 @@ namespace AirportTimetableWPF
             showTimer.Elapsed += ShowTimetable;
             loadTimer.Start();
             showTimer.Start();
+            settings.Visibility = Visibility.Hidden;
         }
         private void LoadTimetable(Object source, ElapsedEventArgs e)
         {
             loadTimer.Interval = loadInterval.Obj;
-            string lang;
-            string depOrArr;
-            int hours;
-            if (loadEnumerator % 2 == 1)
+            string lang = "Ru";
+            string depOrArr = "departures";
+            int hours = 0;
+            switch (loadEnumerator)
             {
-                depOrArr = "departures";
-                hours = outSpan.Obj;
-            }
-            else
-            {
-                depOrArr = "arrivals";
-                hours = inSpan.Obj;
-            }
-            if (loadEnumerator <= 4)
-            {
-                lang = "En";
-                if (loadEnumerator <= 2)
+                case 1:
                     lang = "Ru";
-                loadEnumerator++;
-            }
-            else if (loadEnumerator == 6)
-            {
-                lang = "Ch";
-                loadEnumerator = 1;
-            }
-            else
-            {
-                lang = "Ch";
-                loadEnumerator++;
+                    depOrArr = "departures";
+                    hours = outSpan.Obj;
+                    loadEnumerator++;
+                    title = "Вылеты";
+                    break;
+                case 2:
+                    lang = "Ru";
+                    depOrArr = "arrivals";
+                    hours = inSpan.Obj;
+                    loadEnumerator++;
+                    title = "Прилеты";
+                    break;
+                case 3:
+                    lang = "En";
+                    depOrArr = "departures";
+                    hours = outSpan.Obj;
+                    loadEnumerator++;
+                    title = "Departures";
+                    break;
+                case 4:
+                    lang = "En";
+                    depOrArr = "arrivals";
+                    hours = inSpan.Obj;
+                    loadEnumerator++;
+                    title = "Arrivals";
+                    break;
+                case 5:
+                    lang = "Ch";
+                    depOrArr = "departures";
+                    hours = outSpan.Obj;
+                    loadEnumerator++;
+                    title = "出港";
+                    break;
+                case 6:
+                    lang = "Ch";
+                    depOrArr = "arrivals";
+                    hours = inSpan.Obj;
+                    loadEnumerator = 1;
+                    title = "到达";
+                    break;
             }
             timetable = new ObservableCollection<Flight>(tt.GetTimetable(depOrArr, lang, hours));
             context = new Context(timetable);
@@ -105,6 +125,7 @@ namespace AirportTimetableWPF
             showTimer.Interval = showInterval.Obj;
             mainWindow.Dispatcher.Invoke(() =>
             {
+                titleLbl.Content = title;
                 context.FillTimeTable(rowCount.Obj);
                 date.Content = DateTime.Today.ToString("dd.MM.yyyy");
                 time.Content = DateTime.Now.ToString("HH:mm");
@@ -135,6 +156,13 @@ namespace AirportTimetableWPF
         }
         private void Window_Closed(object sender, EventArgs e)
         {
+        }
+        private void settingsBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (settings.Visibility == Visibility.Visible)
+                settings.Visibility = Visibility.Hidden;
+            else
+                settings.Visibility = Visibility.Visible;
         }
     }
 }

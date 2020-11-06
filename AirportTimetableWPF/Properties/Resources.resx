@@ -128,6 +128,6 @@
     <value>..\localization\en\encities.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="EnStatuses" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\localization\en\enstatuses.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+    <value>..\Localization\En\EnStatuses.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
 </root>

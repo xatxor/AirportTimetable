@@ -6,9 +6,6 @@
              xmlns:local="clr-namespace:AirportTimetableWPF"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="630" Loaded="UserControl_Loaded">
-    <UserControl.Resources>
-        <local:GridLengthConverter x:Key="gridLengthConverter" />
-    </UserControl.Resources>
     <Grid>
         <Grid x:Name="Row" Height="{Binding}"/>
         <ItemsControl x:Name="list" FontSize="{Binding Obj}" Height="900" VerticalAlignment="Top">
@@ -29,7 +26,7 @@
                         <TextBlock Grid.Column="0" Text="{Binding TimeString}" VerticalAlignment="Center" Margin="5,0,5,0"/>
                         <TextBlock Grid.Column="1" Text="{Binding Name}" VerticalAlignment="Center" Margin="5,0,5,0"/>
                         <Image Grid.Column="2" Source="{Binding CompanyLogoPath}" MaxHeight="37" VerticalAlignment="Center" Margin="5,3,10,0"/>
-                        <TextBlock Grid.Column="3" Text="{Binding City}" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                        <TextBlock Grid.Column="3" Text="{Binding City}" VerticalAlignment="Center" Margin="5,0,5,0" TextWrapping="Wrap"/>
                         <TextBlock Grid.Column="4" Text="{Binding Terminal}" TextAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
                         <TextBlock Grid.Column="5" Text="{Binding Status}" VerticalAlignment="Center" Margin="5,0,5,0"/>
                     </Grid>
