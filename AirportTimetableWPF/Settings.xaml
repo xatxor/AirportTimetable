@@ -5,19 +5,21 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AirportTimetableWPF"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300" Loaded="UserControl_Loaded">
+             d:DesignHeight="400" d:DesignWidth="300" Loaded="UserControl_Loaded">
     <Grid x:Name="maingrid" Background="White">
         <TextBlock Text="Размер шрифта" Margin="15,10,110,252" Width="175" FontSize="16" Grid.ColumnSpan="2"/>
-        <Slider Name="slider1" Value="{Binding Obj,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="15,37,50,234" Minimum="12" Maximum="50" TickPlacement="BottomRight" TickFrequency="2" IsSnapToTickEnabled="True" Grid.ColumnSpan="2"/>
-        <TextBox Text="{Binding ElementName=slider1, Path=Value, UpdateSourceTrigger=PropertyChanged}" Margin="256,29,10,241" FontSize="20"/>
-        <TextBlock Text="Интервал обновления экрана" Margin="15,73,49,189" FontSize="16" Grid.ColumnSpan="2"/>
-        <TextBox x:Name="showInt" Margin="256,74,10,196" FontSize="20"/>
-        <TextBlock Text="Интервал обновления данных" Margin="15,111,49,151" FontSize="16" Grid.ColumnSpan="2"/>
-        <TextBox x:Name="loadInt" Margin="256,112,10,158" FontSize="20"/>
-        <TextBlock Text="C какого часа от сейчас показывать прилет (в часах)" Margin="15,149,49,104" FontSize="16" TextWrapping="Wrap" Grid.ColumnSpan="2"/>
-        <TextBox x:Name="inSp" Margin="256,155,10,115" FontSize="20"/>
-        <TextBlock Text="C какого часа от сейчас показывать вылет (в часах)" Margin="15,199,49,54" FontSize="16" TextWrapping="Wrap" Grid.ColumnSpan="2"/>
-        <TextBox x:Name="outSp" Margin="256,206,10,64" FontSize="20"/>
-        <Button Content="Сохранить" HorizontalAlignment="Center" Margin="0,0,0,20" VerticalAlignment="Bottom" Width="74" Click="Button_Click" Height="25" Grid.Column="1"/>
+        <Slider Name="slider1" Value="{Binding Obj,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="15,37,50,234" Minimum="12" Maximum="50" TickPlacement="BottomRight" TickFrequency="2" IsSnapToTickEnabled="True"/>
+        <TextBox Text="{Binding ElementName=slider1, Path=Value, UpdateSourceTrigger=PropertyChanged}" Margin="256,29,10,337" FontSize="20"/>
+        <TextBlock Text="Количество строк" Margin="15,73,49,297" FontSize="16"/>
+        <TextBox x:Name="rowCnt" Margin="256,69,10,297" FontSize="20"/>
+        <TextBlock Text="Интервал обновления экрана" Margin="15,111,49,259" FontSize="16"/>
+        <TextBox x:Name="showInt" Margin="256,107,10,259" FontSize="20"/>
+        <TextBlock Text="Интервал обновления данных" Margin="15,149,49,221" FontSize="16"/>
+        <TextBox x:Name="loadInt" Margin="256,145,10,221" FontSize="20"/>
+        <TextBlock Text="C какого часа от сейчас показывать прилет (в часах)" Margin="15,187,49,173" FontSize="16" TextWrapping="Wrap"/>
+        <TextBox x:Name="inSp" Margin="256,193,10,173" FontSize="20"/>
+        <TextBlock Text="C какого часа от сейчас показывать вылет (в часах)" Margin="15,237,49,122" FontSize="16" TextWrapping="Wrap"/>
+        <TextBox x:Name="outSp" Margin="256,244,10,122" FontSize="20"/>
+        <Button Content="Сохранить" HorizontalAlignment="Center" Margin="0,0,0,20" VerticalAlignment="Bottom" Width="74" Click="Button_Click" Height="25"/>
     </Grid>
 </UserControl>

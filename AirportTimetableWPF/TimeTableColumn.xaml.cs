@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -26,7 +27,9 @@ namespace AirportTimetableWPF
     public partial class TimeTableColumn : UserControl
     {
         public List<Flight> context = new List<Flight>();
-        public Property Font = new Property();
+        public Property font = new Property();
+        public Property rowCount = new Property();
+        public Property rowHeight = new Property(100);
         public TimeTableColumn()
         {
             InitializeComponent();
@@ -34,7 +37,10 @@ namespace AirportTimetableWPF
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            list.DataContext = Font;
+            var temp = 890 / rowCount.Obj;
+            rowHeight.Obj = (int)temp;
+            Row.DataContext = rowHeight.Obj;
+            list.DataContext = font;
             list.ItemsSource = context;
         }
     }

@@ -30,8 +30,8 @@ namespace AirportTimetableWPF
         TimetableHandler tt = new TimetableHandler();
         Context context;
         ObservableCollection<Flight> timetable;
-        public Property Font = new Property();
-        public Property rowCount;
+        public Property font = new Property();
+        public Property rowCount = new Property();
         public Property loadInterval;
         public Property showInterval;
         public Property inSpan;
@@ -48,7 +48,8 @@ namespace AirportTimetableWPF
             //полноэкранный режим
             this.WindowStyle = WindowStyle.None;
             this.WindowState = WindowState.Maximized;
-            Font = settings.Font;
+            font = settings.font;
+            rowCount = settings.rowCount;
             showInterval = settings.showInterval;
             loadInterval = settings.loadInterval;
             inSpan = settings.inSpan;
@@ -104,7 +105,7 @@ namespace AirportTimetableWPF
             showTimer.Interval = showInterval.Obj;
             mainWindow.Dispatcher.Invoke(() =>
             {
-                context.FillTimeTable(10);
+                context.FillTimeTable(rowCount.Obj);
                 date.Content = DateTime.Today.ToString("dd.MM.yyyy");
                 time.Content = DateTime.Now.ToString("HH:mm");
                 timetablegrid.Children.Clear();
@@ -124,9 +125,12 @@ namespace AirportTimetableWPF
                 firstColumn.context = context.first;
                 secondColumn.context = context.second;
                 thirdColumn.context = context.third;
-                firstColumn.Font.Obj = Font.Obj;
-                secondColumn.Font.Obj = Font.Obj;
-                thirdColumn.Font.Obj = Font.Obj;
+                firstColumn.font.Obj = font.Obj;
+                secondColumn.font.Obj = font.Obj;
+                thirdColumn.font.Obj = font.Obj;
+                firstColumn.rowCount.Obj = rowCount.Obj;
+                secondColumn.rowCount.Obj = rowCount.Obj;
+                thirdColumn.rowCount.Obj = rowCount.Obj;
             });
         }
         private void Window_Closed(object sender, EventArgs e)

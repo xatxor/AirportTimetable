@@ -13,7 +13,7 @@ namespace AirportTimetableWPF.Models
     public class Context : INotifyPropertyChanged
     {
         ObservableCollection<Flight> Timetable { get; set; }
-        public Property Font;
+        public Property font;
         public List<Flight> first = new List<Flight>();
         public List<Flight> second = new List<Flight>();
         public List<Flight> third = new List<Flight>();
