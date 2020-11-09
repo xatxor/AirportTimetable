@@ -24,11 +24,11 @@ namespace AirportTimetableWPF
     public partial class Settings : UserControl, INotifyPropertyChanged
     {
         public Property font = new Property();
-        public Property rowCount = new Property(10);
+        public Property rowCount = new Property(23);
         public Property showInterval = new Property(5000);
         public Property loadInterval = new Property(5000);
-        public Property inSpan = new Property(0);
-        public Property outSpan = new Property(0);
+        public Property inSpan = new Property(-3);
+        public Property outSpan = new Property(-3);
         public Settings()
         {
             InitializeComponent();
