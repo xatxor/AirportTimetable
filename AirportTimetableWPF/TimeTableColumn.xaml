@@ -8,16 +8,16 @@
              d:DesignHeight="800" d:DesignWidth="630" Loaded="UserControl_Loaded">
     <Grid>
         <Grid x:Name="Row" Height="{Binding}"/>
-        <ItemsControl x:Name="list" FontSize="{Binding Obj}" Height="900" VerticalAlignment="Top" AlternationCount="2">
+        <ItemsControl x:Name="list" Height="900" VerticalAlignment="Top" AlternationCount="2">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Grid x:Name="InnerGrid">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="70"/>
+                            <ColumnDefinition Width="90"/>
                             <ColumnDefinition Width="100"/>
-                            <ColumnDefinition Width="100"/>
-                            <ColumnDefinition Width="150"/>
-                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="220"/>
+                            <ColumnDefinition Width="0"/>
                             <ColumnDefinition Width="150"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>

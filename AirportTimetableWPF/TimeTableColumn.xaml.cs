@@ -26,8 +26,30 @@ namespace AirportTimetableWPF
     /// </summary>
     public partial class TimeTableColumn : UserControl
     {
+        public static readonly DependencyProperty FontProperty;
+        public static readonly DependencyProperty RowsProperty;
+
+        static TimeTableColumn()
+        {
+            FontProperty = DependencyProperty.Register("Font", typeof(int), typeof(TimeTableColumn));
+            RowsProperty = DependencyProperty.Register("Rows", typeof(int), typeof(TimeTableColumn));
+        }
+        public int Font
+        {
+            get { return (int)GetValue(FontProperty); }
+            set { SetValue(FontProperty, value);
+                list.DataContext = value;
+                list.FontSize = value;
+            }
+        }
+        public int Rows
+        {
+            get { return (int)GetValue(RowsProperty); }
+            set { SetValue(RowsProperty, value); }
+        }
+
+
         public List<Flight> context = new List<Flight>();
-        public Property font = new Property();
         public Property rowCount = new Property();
         public Property rowHeight = new Property(100);
         public TimeTableColumn()
@@ -40,8 +62,13 @@ namespace AirportTimetableWPF
             var temp = 890 / rowCount.Obj;
             rowHeight.Obj = (int)temp;
             Row.DataContext = rowHeight.Obj;
-            list.DataContext = font;
             list.ItemsSource = context;
         }
+        public void SetFlights(List<Flight> flights)
+        {
+            context = flights;
+            list.ItemsSource = context;
+        }
+
     }
 }
