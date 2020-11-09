@@ -68,6 +68,7 @@ namespace AirportTimetableWPF
         }
         private void LoadTimetable(Object source, ElapsedEventArgs e)
         {
+            loadTimer.Stop();
             loadTimer.Interval = loadInterval.Obj;
             string lang = "Ru";
             string depOrArr = "departures";
@@ -79,46 +80,49 @@ namespace AirportTimetableWPF
                     depOrArr = "departures";
                     hours = outSpan.Obj;
                     loadEnumerator++;
-                    title = "Вылеты";
+                    title = "Вылеты 🛫";
                     break;
-                case 2:
+                case 4:
                     lang = "Ru";
                     depOrArr = "arrivals";
                     hours = inSpan.Obj;
                     loadEnumerator++;
-                    title = "Прилеты";
+                    title = "Прилеты 🛬";
                     break;
-                case 3:
+                case 2:
                     lang = "En";
                     depOrArr = "departures";
                     hours = outSpan.Obj;
                     loadEnumerator++;
-                    title = "Departures";
+                    title = "Departures 🛫";
                     break;
-                case 4:
+                case 5:
                     lang = "En";
                     depOrArr = "arrivals";
                     hours = inSpan.Obj;
                     loadEnumerator++;
-                    title = "Arrivals";
+                    title = "Arrivals 🛬";
                     break;
-                case 5:
+                case 3:
                     lang = "Ch";
                     depOrArr = "departures";
                     hours = outSpan.Obj;
                     loadEnumerator++;
-                    title = "出港";
+                    title = "出港 🛫";
                     break;
                 case 6:
                     lang = "Ch";
                     depOrArr = "arrivals";
                     hours = inSpan.Obj;
                     loadEnumerator = 1;
-                    title = "到达";
+                    title = "到达 🛬";
                     break;
             }
             timetable = new ObservableCollection<Flight>(tt.GetTimetable(depOrArr, lang, hours));
             context = new Context(timetable);
+            context.FillTimeTable(rowCount.Obj);
+
+            loadTimer.Start();
         }
         private void ShowTimetable(Object source, ElapsedEventArgs e)
         {
@@ -129,29 +133,22 @@ namespace AirportTimetableWPF
                 context.FillTimeTable(rowCount.Obj);
                 date.Content = DateTime.Today.ToString("dd.MM.yyyy");
                 time.Content = DateTime.Now.ToString("HH:mm");
-//                timetablegrid.Children.Clear();
-//                TimeTableColumn firstColumn, secondColumn, thirdColumn = new TimeTableColumn();
- //               timetablegrid.Children.Add(firstColumn = new TimeTableColumn());
-//                firstColumn.Margin = new Thickness(10, 110, 0, 0);
-  //              firstColumn.HorizontalAlignment = HorizontalAlignment.Left;
-    //            firstColumn.VerticalAlignment = VerticalAlignment.Top;
-  //              timetablegrid.Children.Add(secondColumn = new TimeTableColumn());
-   //             secondColumn.Margin = new Thickness(0, 110, 0, 0);
-     //           secondColumn.HorizontalAlignment = HorizontalAlignment.Center;
-       //         secondColumn.VerticalAlignment = VerticalAlignment.Top;
-    //            timetablegrid.Children.Add(thirdColumn = new TimeTableColumn());
-   //             thirdColumn.Margin = new Thickness(0, 110, 10, 0);
-     //           thirdColumn.HorizontalAlignment = HorizontalAlignment.Right;
-       //         thirdColumn.VerticalAlignment = VerticalAlignment.Top;
-                firstColumn.context = context.first;
-                secondColumn.context = context.second;
-                thirdColumn.context = context.third;
-                firstColumn.font.Obj = font.Obj;
-                secondColumn.font.Obj = font.Obj;
-                thirdColumn.font.Obj = font.Obj;
-                firstColumn.rowCount.Obj = rowCount.Obj;
-                secondColumn.rowCount.Obj = rowCount.Obj;
-                thirdColumn.rowCount.Obj = rowCount.Obj;
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    firstColumn.context = context.first;
+                    secondColumn.context = context.second;
+                    thirdColumn.context = context.third;
+                    firstColumn.Font = font.Obj;
+                    secondColumn.Font = font.Obj;
+                    thirdColumn.Font = font.Obj;
+                    firstColumn.rowCount.Obj = rowCount.Obj;
+                    secondColumn.rowCount.Obj = rowCount.Obj;
+                    thirdColumn.rowCount.Obj = rowCount.Obj;
+                    firstColumn.SetFlights(context.first);
+                    secondColumn.SetFlights(context.second);
+                    thirdColumn.SetFlights(context.third);
+                });
+
             });
         }
         private void Window_Closed(object sender, EventArgs e)
@@ -163,6 +160,13 @@ namespace AirportTimetableWPF
                 settings.Visibility = Visibility.Hidden;
             else
                 settings.Visibility = Visibility.Visible;
+        }
+
+        private void Exit_Clicked(object sender, RoutedEventArgs e)
+        {
+            loadTimer.Stop();
+            showTimer.Stop();
+            Application.Current.Shutdown();
         }
     }
 }
