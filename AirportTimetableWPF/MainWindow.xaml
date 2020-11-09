@@ -12,6 +12,15 @@
             <Setter Property="Background" Value="Black"/>
             <Setter Property="Margin" Value="2 0"/>
         </Style>
+
+        <Style TargetType="{x:Type Button}" x:Key="TButton">
+            <Setter Property="Opacity" Value="0"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Opacity" Value="1"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
     <Grid Background="#FF272727">
         <Grid.RowDefinitions>
@@ -32,6 +41,6 @@
         <Label x:Name="time" Grid.Row="2" Content="##:##" Foreground="White" FontSize="30" HorizontalAlignment="Right" Grid.Column="2"/>
 
         <local:Settings x:Name="settings" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="300" Height="400" Grid.ColumnSpan="3" Grid.RowSpan="3"/>
-        <Button x:Name="settingsBtn" Content="Настройки" Width="75" VerticalAlignment="Top" HorizontalAlignment="Right" Click="settingsBtn_Click" Grid.Column="2"/>
+        <Button x:Name="settingsBtn" Style="{StaticResource TButton}"  Content="Настройки" Margin="10" FontSize="20" HorizontalAlignment="Right" Click="settingsBtn_Click" Grid.Column="2"/>
     </Grid>
 </Window>
