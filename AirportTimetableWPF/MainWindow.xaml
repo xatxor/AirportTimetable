@@ -41,6 +41,9 @@
         <Label x:Name="time" Grid.Row="2" Content="##:##" Foreground="White" FontSize="30" HorizontalAlignment="Right" Grid.Column="2"/>
 
         <local:Settings x:Name="settings" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="300" Height="400" Grid.ColumnSpan="3" Grid.RowSpan="3"/>
-        <Button x:Name="settingsBtn" Style="{StaticResource TButton}"  Content="Настройки" Margin="10" FontSize="20" HorizontalAlignment="Right" Click="settingsBtn_Click" Grid.Column="2"/>
+        <StackPanel Grid.Column="2" HorizontalAlignment="Right" Orientation="Horizontal">
+            <Button x:Name="settingsBtn" Style="{StaticResource TButton}"  Content="Настройки" Margin="10" FontSize="20" Click="settingsBtn_Click" Grid.Column="2"/>
+            <Button Style="{StaticResource TButton}"  Content="Выход" Margin="10" FontSize="20" Click="Exit_Clicked" Grid.Column="2"/>
+        </StackPanel>
     </Grid>
 </Window>
